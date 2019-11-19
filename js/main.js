@@ -3,9 +3,9 @@ import Keyboard from './Keyboard.js';
 
 const keyboard = new Keyboard();
 
-const body = document.querySelector('body');
 const textArea = document.createElement('textarea');
 const specialKeysCode = [
+  'Backquote',
   'Backspace',
   'Tab',
   'CapsLock',
@@ -19,9 +19,11 @@ const specialKeysCode = [
   'Enter',
   'Menu',
   'Backspace',
-  'ContextMenu'];
+  'ContextMenu',
+];
 
 const createContainer = () => {
+  const body = document.querySelector('body');
   const container = document.createElement('div');
   container.classList.add('container');
   body.prepend(container);
@@ -29,16 +31,9 @@ const createContainer = () => {
 
 const createTextArea = () => {
   const textAreaContainer = document.querySelector('.container');
-  textArea.placeholder = 'Write something here...';
+  textArea.placeholder = 'Write something here... \nChange language by pressing Menu button';
   textArea.classList.add('textarea');
   textAreaContainer.append(textArea);
-};
-
-const createKeyboardContainer = () => {
-  const container = document.querySelector('.container');
-  const keyboardContainer = document.createElement('div');
-  keyboardContainer.classList.add('keyboard_container');
-  container.append(keyboardContainer);
 };
 
 const handleSpecialKeys = (keyCode) => {
@@ -57,15 +52,14 @@ const handleSpecialKeys = (keyCode) => {
   }
 };
 
-const keyboardInit = () => {
+const appInit = () => {
   createContainer();
   createTextArea();
-  createKeyboardContainer();
-  keyboard.setLang();
-  keyboard.renderKeyboard(keyboard.keyboardSet);
+  keyboard.init();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  appInit();
   const keyboardContainer = document.querySelector('.keyboard_container');
   keyboardContainer.addEventListener('click', (e) => {
     const { keyCode } = e.target.dataset;
@@ -83,20 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
-    button.classList.add('blur');
-    if (specialKeysCode.includes(keyCode)) {
-      handleSpecialKeys(keyCode);
-    } else {
-      const a = keyboard.keyboardSet.filter((item) => Object.prototype.hasOwnProperty.call(item, `${keyCode}`));
-      const b = a[0][keyCode];
-      textArea.insertAdjacentHTML('beforeend', `${b || ''}`);
+    if (button) {
+      button.classList.add('blur');
+      if (specialKeysCode.includes(keyCode)) {
+        handleSpecialKeys(keyCode);
+      } else {
+        const a = keyboard.keyboardSet.filter((item) => Object.prototype.hasOwnProperty.call(item, `${keyCode}`));
+        const b = a[0][keyCode];
+        textArea.insertAdjacentHTML('beforeend', `${b || ''}`);
+      }
     }
   });
   document.addEventListener('keyup', (e) => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
-    button.classList.remove('blur');
+    if (button) {
+      button.classList.remove('blur');
+    }
   });
 });
-
-keyboardInit();

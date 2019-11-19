@@ -1,5 +1,11 @@
 import { rusKeyboard, engKeyboard } from './keyboards.js';
 
+function createKeyboardContainer() {
+  const container = document.querySelector('.container');
+  const keyboardContainer = document.createElement('div');
+  keyboardContainer.classList.add('keyboard_container');
+  container.append(keyboardContainer);
+}
 export default class Keyboard {
   constructor() {
     this.lang = 'en';
@@ -7,12 +13,6 @@ export default class Keyboard {
     this.keyboardSet = [];
   }
 
-  static createKeyboardContainer() {
-    const container = document.querySelector('.container');
-    const keyboardContainer = document.createElement('div');
-    keyboardContainer.classList.add('keyboard_container');
-    container.append(keyboardContainer);
-  }
 
   renderKeyboard() {
     const keyboardContainer = document.querySelector('.keyboard_container');
@@ -80,8 +80,8 @@ export default class Keyboard {
     }
   }
 
-  keyboardInit() {
-    this.createKeyboardContainer();
+  init() {
+    createKeyboardContainer();
     this.setLang();
     this.renderKeyboard(this.keyboardSet);
   }
