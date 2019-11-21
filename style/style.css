@@ -84,6 +84,18 @@
     inset 0 0 2px black;
 }
 
+.caps {
+  cursor: pointer;
+  background-color: plum;
+  -webkit-box-shadow: 
+    0 0 5px orchid,
+    inset 0 0 2px black;
+  box-shadow: 
+    0 0 5px orchid,
+    inset 0 0 2px black;
+}
+
+
 .Space {
   width: 40%;
 }

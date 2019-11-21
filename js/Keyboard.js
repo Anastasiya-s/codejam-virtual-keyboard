@@ -4,8 +4,8 @@ export default class Keyboard {
   constructor() {
     this.lang = 'ru';
     this.isCapsOn = false;
-    this.isShiftPressed = false;
-    this.isCtrlPressed = false;
+    // this.isShiftPressed = false;
+    // this.isCtrlPressed = false;
     this.keyboardSet = rusKeyboard;
   }
 

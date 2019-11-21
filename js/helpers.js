@@ -9,28 +9,29 @@ export const handleSpecialKeys = (keyCode, keyboard, textArea) => {
     case 'Enter':
       textArea.insertAdjacentText('beforeend', '\n');
       break;
-    case 'ControlRight':
-    case 'ControlLeft':
-      keyboard.isCtrlPressed = true;
-      break;
+    case 'AltRight':
+    case 'AltLeft':
+        if (event.shiftKey) {
+          keyboard.changeLanguage()
+        }
+        break;
     case 'ShiftLeft':
     case 'ShiftRight':
-      keyboard.isShiftPressed = true;
-      break
+      if (event.altKey) {
+        keyboard.changeLanguage()
+      }
+      break;
+    case 'CapsLock':
+      keyboard.isCapsOn = !keyboard.isCapsOn;
     default:
       break;
-  }
-  if (keyboard.isCtrlPressed && keyboard.isShiftPressed) {
-    keyboard.changeLanguage();
-    keyboard.isCtrlPressed = false;
-    keyboard.isShiftPressed = false;
   }
 };
   
 export const addSymbol = (keyCode, keyboard, textArea) => {
   const keyboardRow = keyboard.keyboardSet.filter((item) => Object.prototype.hasOwnProperty.call(item, `${keyCode}`));
-  const symbol = keyboardRow[0][keyCode] || '';
-  textArea.innerHTML('beforeend', symbol);
+  const symbol = keyboard.isCapsOn ? keyboardRow[0][keyCode].toUpperCase() || '' : keyboardRow[0][keyCode] || '';
+  textArea.insertAdjacentText('beforeend', symbol);
 }
 
 export const createKeyboardContainer = () => {

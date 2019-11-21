@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!keyCode) {
       return;
     }
+    if (keyCode === 'CapsLock') {
+      const button = document.querySelector(`.${keyCode}`);
+      button.classList.toggle('caps')
+    }
     if (specialKeysCode.includes(keyCode)) {
       handleSpecialKeys(keyCode, keyboard, textArea);
     } else {
@@ -42,6 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
     if (button) {
+      if (keyCode === 'CapsLock') {
+        button.classList.toggle('caps')
+      }
       button.classList.add('blur');
     }
   });
@@ -50,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
     if (button) {
+      if (specialKeysCode.includes(keyCode)) {
+        handleSpecialKeys(keyCode, keyboard, textArea);
+      } else {
+        addSymbol(keyCode, keyboard, textArea);
+      }
       button.classList.remove('blur');
-        if (specialKeysCode.includes(keyCode)) {
-          handleSpecialKeys(keyCode, keyboard, textArea);
-        } else {
-          addSymbol(keyCode, keyboard, textArea);
-        }
     }
   });
 });
