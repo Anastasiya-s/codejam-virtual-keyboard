@@ -1,29 +1,22 @@
 import { rusKeyboard, engKeyboard } from './keyboards.js';
-
-function createKeyboardContainer() {
-  const container = document.querySelector('.container');
-  const keyboardContainer = document.createElement('div');
-  keyboardContainer.classList.add('keyboard_container');
-  container.append(keyboardContainer);
-}
+import { createKeyboardContainer } from './helpers.js';
 export default class Keyboard {
   constructor() {
-    this.lang = 'en';
+    this.lang = 'ru';
     this.isCapsOn = false;
-    this.keyboardSet = [];
+    this.keyboardSet = rusKeyboard;
   }
-
 
   renderKeyboard() {
     const keyboardContainer = document.querySelector('.keyboard_container');
     return this.keyboardSet.map((row) => {
       const el = document.createElement('div');
-      Object.entries(row).map((cell) => {
+      Object.entries(row).forEach((cell) => {
         const elem = document.createElement('span');
-        elem.insertAdjacentHTML('afterbegin', `${cell[1]}`);
+        elem.insertAdjacentHTML('afterbegin', cell[1]);
         elem.classList.add('cell');
-        elem.classList.add(`${cell[0]}`);
-        elem.dataset.keyCode = `${cell[0]}`;
+        elem.classList.add(cell[0]);
+        elem.dataset.keyCode = cell[0];
         el.append(elem);
         return elem;
       });
@@ -61,23 +54,6 @@ export default class Keyboard {
       keyboardContainer.removeChild(keyboardContainer.lastChild);
     }
     this.renderKeyboard(this.keyboardSet);
-  }
-
-  handleSpecialKeys(keyCode) {
-    const textArea = document.querySelector('.textarea');
-    switch (keyCode) {
-      case 'ContextMenu':
-        this.changeLanguage();
-        return;
-      case 'Space':
-        textArea.insertAdjacentHTML('beforeend', ' ');
-        return;
-      case 'Enter':
-        textArea.insertAdjacentText('beforeend', '\n');
-        break;
-      default:
-        break;
-    }
   }
 
   init() {
