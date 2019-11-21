@@ -9,15 +9,28 @@ export const handleSpecialKeys = (keyCode, keyboard, textArea) => {
     case 'Enter':
       textArea.insertAdjacentText('beforeend', '\n');
       break;
+    case 'ControlRight':
+    case 'ControlLeft':
+      keyboard.isCtrlPressed = true;
+      break;
+    case 'ShiftLeft':
+    case 'ShiftRight':
+      keyboard.isShiftPressed = true;
+      break
     default:
       break;
+  }
+  if (keyboard.isCtrlPressed && keyboard.isShiftPressed) {
+    keyboard.changeLanguage();
+    keyboard.isCtrlPressed = false;
+    keyboard.isShiftPressed = false;
   }
 };
   
 export const addSymbol = (keyCode, keyboard, textArea) => {
   const keyboardRow = keyboard.keyboardSet.filter((item) => Object.prototype.hasOwnProperty.call(item, `${keyCode}`));
   const symbol = keyboardRow[0][keyCode] || '';
-  textArea.insertAdjacentHTML('beforeend', symbol);
+  textArea.innerHTML('beforeend', symbol);
 }
 
 export const createKeyboardContainer = () => {
