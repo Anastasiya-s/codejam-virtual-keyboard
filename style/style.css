@@ -41,8 +41,10 @@
 
 .cell.blur {
   background-color: palevioletred;
-  -webkit-box-shadow: 0 0 5px orchid, 2px 2px 2px orchid;
-          box-shadow: 0 0 5px orchid, 2px 2px 2px orchid;
+  -webkit-box-shadow: 0 0 5px orchid,
+ 2px 2px 2px orchid;
+          box-shadow: 0 0 5px orchid,
+ 2px 2px 2px orchid;
 }
 
 .cell {
@@ -51,29 +53,37 @@
   text-transform: uppercase;
   background: seashell;
   text-align: center;
+  transition: background-color 0.5s;
 }
 
 .cell:first-child, .cell:last-child {
   -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
+  -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
 .cell:hover {
   cursor: pointer;
   background-color: palevioletred;
-  -webkit-box-shadow: 0 0 5px orchid, 2px 2px 2px orchid;
-          box-shadow: 0 0 5px orchid, 2px 2px 2px orchid;
-}
+  -webkit-box-shadow: 
+    0 0 5px orchid,
+    2px 2px 2px orchid;
+  box-shadow: 
+    0 0 5px orchid,
+    2px 2px 2px orchid;
+  }
 
 .cell:active {
   cursor: pointer;
   background-color: plum;
-  -webkit-box-shadow: 0 0 5px orchid, inset 0 0 2px black;
-          box-shadow: 0 0 5px orchid, inset 0 0 2px black;
+  -webkit-box-shadow: 
+    0 0 5px orchid,
+    inset 0 0 2px black;
+  box-shadow: 
+    0 0 5px orchid,
+    inset 0 0 2px black;
 }
 
 .Space {
   width: 40%;
 }
-/*# sourceMappingURL=style.css.map */
