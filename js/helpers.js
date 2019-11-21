@@ -27,4 +27,26 @@ export const createKeyboardContainer = () => {
   container.append(keyboardContainer);
 }
 
+export const createContainer = () => {
+  const body = document.querySelector('body');
+  const container = document.createElement('div');
+  container.classList.add('container');
+  body.prepend(container);
+};
+
+export const createTextArea = () => {
+  const textAreaContainer = document.querySelector('.container');
+  const textArea = document.createElement('textarea');
+  textArea.placeholder = 'Write something here... \nChange language by pressing Menu button or Shift + Ctrl';
+  textArea.classList.add('textarea');
+  textAreaContainer.append(textArea);
+};
+
+export const appInit = (keyboard) => {
+  createContainer();
+  createTextArea();
+  keyboard.init();
+};  
+
+
 

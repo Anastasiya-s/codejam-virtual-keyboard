@@ -1,9 +1,8 @@
 import Keyboard from './Keyboard.js';
-import { handleSpecialKeys, addSymbol } from './helpers.js';
+import { appInit, handleSpecialKeys, addSymbol } from './helpers.js';
 
 const keyboard = new Keyboard();
 
-const textArea = document.createElement('textarea');
 const specialKeysCode = [
   'Backquote',
   'Backspace',
@@ -23,29 +22,10 @@ const specialKeysCode = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-  const createContainer = () => {
-    const body = document.querySelector('body');
-    const container = document.createElement('div');
-    container.classList.add('container');
-    body.prepend(container);
-  };
-  
-  const createTextArea = () => {
-    const textAreaContainer = document.querySelector('.container');
-    textArea.placeholder = 'Write something here... \nChange language by pressing Menu button';
-    textArea.classList.add('textarea');
-    textAreaContainer.append(textArea);
-  };
-  
-  const appInit = () => {
-    createContainer();
-    createTextArea();
-    keyboard.init();
-  };  
-  
-  appInit();
-
+  appInit(keyboard);
+  const textArea = document.querySelector('.textarea');
   const keyboardContainer = document.querySelector('.keyboard_container');
+  const pressedKeys = [];
   
   keyboardContainer.addEventListener('click', (e) => {
     const { keyCode } = e.target.dataset;
@@ -63,7 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
     if (button) {
+      pressedKeys.push(keyCode);
       button.classList.add('blur');
+      if (pressedKeys.includes('ShiftLeft' || 'ShiftRight') && pressedKeys.includes('ControlLeft' || 'ControlRight')) {
+        keyboard.changeLanguage();
+      }
       if (specialKeysCode.includes(keyCode)) {
         handleSpecialKeys(keyCode, keyboard, textArea);
       } else {
@@ -75,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keyup', (e) => {
     const keyCode = e.code;
     const button = document.querySelector(`.${keyCode}`);
+    pressedKeys.pop(keyCode);
     if (button) {
       button.classList.remove('blur');
     }
